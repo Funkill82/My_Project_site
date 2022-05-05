@@ -1,0 +1,14 @@
+
+.card_img{
+   height:150px;
+   width:150px;
+}
+.prod_img{
+    display:block;
+    width:100%;
+}
+.reklama_img{
+    /*display:block;
+    width:100%;*/
+    border:1px solid red;
+}

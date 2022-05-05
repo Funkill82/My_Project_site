@@ -1,0 +1,8 @@
+{% extends 'start.html' %}
+
+{% block content %}
+
+    {% for data in under_category %}
+      {{ data.name }}
+    {% endfor %}
+{% endblock %}

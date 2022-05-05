@@ -1,0 +1,15 @@
+{% extends 'start.html' %}
+{% load static %}
+{% block content %}
+<h3>Регистрация</h3>
+<hr>
+
+        <form action="{% url 'main:register' %}" method="POST">
+            {% csrf_token %}
+
+            <table>{{form}} {{field.errors.as_text}} </table>
+
+            <button type="submit" class="btn btn-success">Отправить</button>
+        </form>
+
+{% endblock %}

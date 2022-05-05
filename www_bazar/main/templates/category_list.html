@@ -1,0 +1,51 @@
+{% extends 'start.html' %}
+{% load static %}
+{% block content %}
+    <h2>1</h2>
+
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                    <div class="mb-3">
+                        <h3>форма для фильтра</h3>
+                        <form action="{% url 'main:filter' %}" method="POST" style="width: 60px; color: blue" >
+                            {% csrf_token %}
+                            {% for field in sort_form %}
+                            <table>{{ field.label }} {{field}} {{field.errors.as_text}}</table>
+                            {% endfor %}
+
+                            <input type="submit" value="Фильтровать">
+                        </form>
+                    </div>
+            </div>
+        <div class="col">
+                {% for product in object_list %}
+                    <p>
+                        <button type="button" class="btn btn-outline-primary">
+                            <a href="{{ product.under_category.get_absolute_url }}">
+                            {{ product.under_category|upper }}</a>
+                        </button>
+
+                    </p>
+                {% endfor %}
+        </div>
+    </div>
+
+{% block pagination %}
+        {% if is_paginated %}
+
+        <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            {% if page_obj.has_previous %}
+                <li class="page-item"><a class="page-link" href="{{ request.path }}?page={{ page_obj.previous_page_number }}">Назад</a></li>
+            {% endif %}
+        <li class="page-item"><a class="page-link" href="#">{{ page_obj.number }}</a></li>
+
+            {% if page_obj.has_next %}
+        <li class="page-item"><a class="page-link" href="{{ request.path }}?page={{ page_obj.next_page_number }}">Вперед</a></li>
+            {% endif %}
+        </ul>
+        </nav>
+        {% endif %}
+{% endblock %}
+{% endblock %}

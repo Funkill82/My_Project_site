@@ -1,0 +1,21 @@
+{% extends 'start.html' %}
+{% load socialaccount %}
+{% block content %}
+
+
+<h3>Вход</h3>
+<hr>
+<form action="{% url 'main:login' %}" method="POST">
+    {% csrf_token %}
+    {{form}} <span>{{field.errors.as_text}}</span>
+    <button type="submit" class="btn btn-success">Отправить</button>
+</form>
+<a href="{% url 'main:password_reset' %}">Смена пароля</a>
+<hr>
+
+
+<a href="{% provider_login_url 'facebook' method='oauth2' %}" class="btn btn-block btn-social btn-facebook" style="background-color:#3b5998;text-align:center">
+  <span class="fa fa-facebook"></span>
+               Войдите через Facebook
+</a>
+{% endblock %}

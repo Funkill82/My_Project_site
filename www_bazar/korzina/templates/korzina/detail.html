@@ -1,0 +1,81 @@
+{% extends 'start.html' %}
+{% load static %}
+{% block title %}
+    Ваша корзина
+{% endblock %}
+{% block content %}
+    <h1>Ваша корзина</h1>
+
+    <table >
+        <thead>
+        <tr>
+            <th>Изображение</th>
+            <th>Товар</th>
+            <th>Колличество</th>
+            <th>Цена за единицу</th>
+            <th>Общая цена</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        {% for item in korzina %}
+            {% with product=item.product %}
+                <tr>
+                    <td>
+                        <div class="card_img">
+                        <a href="{{ product.get_absolute_url }}">
+                            <img class="prod_img" src="
+                                {% if product.image %}
+                                    {{ product.image.url }}
+                                {% else %}
+                                    {% static 'img/no_image.png' %}
+                                {% endif %}">
+                        </a>
+                        </div>
+                    </td>
+                    <td>{{ product.name }}</td>
+                    <td>---{{ item.quantity }}шт.</td>
+                    <td class="num">${{ item.price }}</td>
+                    <td class="num">${{ item.total_price }}</td>
+                    <td><a href="{% url 'korzina:korzina_remove' product_id=product.id%}">Удалить товар</a></td>
+                </tr>
+            {% endwith %}
+        {% endfor %}
+                        <tr >
+                        {% if korzina.kupon %}
+                        <td colspan="8"></td>
+                        <td>Итого без скидки: ${{ korzina.get_total_price }}</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Купон :"{{ korzina.kupon.code }}".
+                             Ваша скидка:{{ korzina.kupon.discount }}%
+                        </td>
+                        <td colspan="8"></td>
+                            <td>
+                            - ${{ korzina.get_discount|floatformat:"2" }}
+                            </td>
+                        </tr>
+                        <td colspan="8"></td>
+                        <td >
+                            Итого со скидкой: ${{ korzina.get_total_price_after_discount|floatformat:"2" }}
+                        </td>
+                        {% endif %}
+
+
+        </tbody>
+    </table>
+        <div>
+            <form action="{% url 'orders:kupon_activate' %}" method="POST">
+                {% csrf_token %}
+                {{ kupon_form }}
+                <input type="submit" value="Применить">
+            </form>
+        </div>
+    <br>
+        <p >
+            <a href="{% url 'home' %}" class="button light">Вернуться</a>
+            <a href="{% url 'orders:order_create' %}" class="button">Оформить заказ</a>
+            <a href="{% url 'orders:create_1click' %}" class="button">Заказать в 1 клик</a>
+        </p>
+{% endblock %}

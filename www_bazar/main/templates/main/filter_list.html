@@ -1,0 +1,50 @@
+{% extends 'start.html' %}
+{% load static %}
+{% block content %}
+    <h2>3</h2>
+
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                    <div class="mb-3">
+                        <h2>форма для фильтра</h2>
+                        <form action="{% url 'main:filter' %}" method="POST">
+                            {% csrf_token %}
+                            {% for field in form %}
+                        <table>{{ field.label }} {{field}} {{field.errors.as_text}}</table>
+                            {% endfor %}
+
+                        <input type="submit" value="Фильтровать">
+            </form>
+                    </div>
+            </div>
+        <div class="col">
+                {% for product in obj %}
+                        <div class="card_img">
+                            <img class="prod_img" src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}">
+                        </div>
+                            <p> <a href="{{ product.get_absolute_url }}">{{ product.slug }}</a> </p>
+                {% endfor %}
+        </div>
+    </div>
+
+
+
+{% block pagination %}
+  {% if is_paginated %}
+      <div class="pagination">
+          <span class="page-links">
+              {% if page_obj.has_previous %}
+                  <a href="{{ request.path }}?page={{ page_obj.previous_page_number }}">previous</a>
+              {% endif %}
+              <span class="page-current">
+                  Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+              </span>
+              {% if page_obj.has_next %}
+                  <a href="{{ request.path }}?page={{ page_obj.next_page_number }}">next</a>
+              {% endif %}
+          </span>
+      </div>
+  {% endif %}
+{% endblock %}
+{% endblock %}

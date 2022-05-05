@@ -1,0 +1,36 @@
+{% extends 'start.html' %}
+{% load embed_video_tags %}
+{% load static %}
+
+{% block content %}
+
+<br>
+
+<div style="float: left">
+<div class="card_img" >
+    <img class="prod_img"
+         src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}">
+</div>
+<li> Название: {{ product.name }}</li>
+<li> Бренд : {% for brand in product.brand.all %}
+    {{brand}}
+    {% endfor %}
+</li>
+<li> Описание: {{ product.description }}</li>
+<li> Магазин: {{ product.bazar }}</li>
+<li> Цена: {{ product.price }}</li>
+<li> Колличество на складе: {{ product.stock }}</li>
+<br>
+<div>
+    <form action="{% url 'korzina:korzina_add' product_id=product.id %}" method="POST">
+        {% csrf_token %}
+
+        {{ korzina_product_form}}
+        <input type="submit" value="Добавить в корзину">
+    </form>
+    <br>
+</div>
+</div>
+<div style="float: right">{% video product.video_new %}</div>
+
+{% endblock %}

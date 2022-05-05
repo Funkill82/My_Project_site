@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head class="container">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>Home</title>
+
+
+    <div align="right">
+        {{user}}
+        {% if user.is_authenticated %}
+        <a href="{% url 'main:logout' %}">Выход</a>
+        {% else %}
+        <a href="{% url 'main:login' %}">Вход</a> | <a href="{% url 'main:register' %}">Регистрация</a>
+        {%endif%}
+
+    </div>
+
+
+    <div>
+
+        <a href="{% url 'korzina:korzina_detail' %}">Корзина</a>
+        {% with total_items=korzina|length %}
+        {% if korzina|length > 0 %}
+        Ваша корзина:
+        <a href="{% url 'korzina:korzina_detail' %}">
+            {{ total_items }} товар{{ total_items|pluralize:"ов" }},
+            ${{ korzina.get_total_price }}
+        </a>
+        {% else %}
+        Ваша корзина пуста.
+        {% endif %}
+        {% endwith %}
+    </div>
+
+    <div align="right">
+        <form action="{% url 'main:search_results' %}" method="GET">
+            <input name="q" type="text" placeholder="Поиск по сайту ">
+        </form>
+    </div>
+
+
+    <div class="btn-group">
+        <a href="{% url 'home' %}" class="btn btn-outline-primary">Домашняя страница</a>
+        <a href="#" class="btn btn-outline-primary">О компании</a>
+        <a href="#" class="btn btn-outline-primary">Оплата и доставка</a>
+        <a href="#" class="btn btn-outline-primary">Гарантии</a>
+        <a href="#" class="btn btn-outline-primary">Контакты</a>
+        <a href="#" class="btn btn-outline-primary"> Купоны </a>
+        <a href="#" class="btn btn-outline-primary" style="color:red"> Акции </a>
+
+    </div>
+    <div class="btn-group">
+        <a href="{% url 'main:category_list' slug='бытовая-техника' %}" class="btn btn-outline-primary">Бытовая техника</a>
+        <a href="{% url 'main:category_list'  slug='electronics'%}" class="btn btn-outline-primary">Электроника</a>
+        <a href="{% url 'main:twice_product'  %}" class="btn btn-outline-primary">Специальные
+                комплекты</a>
+        <a href="{% url 'main:category_list' slug='electronics' %}" class="btn btn-outline-primary">Топ акций</a>
+        <a href="{% url 'main:category_list'  slug='electronics'%}" class="btn btn-outline-primary" style="color:red">Новинки</a>
+    </div>
+
+</head>
+<body>
+
+{% block content %}
+<div>
+    <div  style="float:left; border: 1px solid blue; height: 335px; width:25%">
+            <iframe width="335" height="335" src="https://www.youtube.com/embed/iVKnQyRPci8"
+                    title="YouTube video player" frameborder="0" allow="accelerometer; autoplay;
+                     clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+            </iframe>
+    </div>
+
+    <div style="float:left; border: 1px solid blue; height: 335px; width:50%">
+        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
+                        aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+                        aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
+                        aria-label="Slide 3"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3"
+                        aria-label="Slide 4"></button>
+            </div>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="{% static 'img/fggg_1.png' %}" class="d-block w-100" alt="...">
+                </div>
+                <div class="carousel-item">
+                    <img src="{% static 'img/fggg_2.png' %}" class="d-block w-100" alt="...">
+                </div>
+                <div class="carousel-item">
+                    <img src="{% static 'img/fggg_3.png' %}" class="d-block w-100" alt="...">
+                </div>
+                <div class="carousel-item">
+                    <img src="{% static 'img/fggg_4.png' %}" class="d-block w-100" alt="...">
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+                    data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+                    data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </div>
+
+    <div style="float:left; border: 1px solid blue; height: 335px; width:25%">
+        <iframe width="335" height="335" src="https://www.youtube.com/embed/9hRRtcJtcAM"
+                title="YouTube video player" frameborder="0" allow="accelerometer; autoplay;
+                 clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+        </iframe>
+    </div>
+</div>
+
+<div align="center">
+    <div style="width: 100%;">
+        <div style="float: left; width: 50%; height: 300px; border: 1px solid blue;">
+            <a href="{% url 'main:top' %}"> ХИТЫ ПРОДАЖ </a>
+            <div id="carouselExampleIndicators_2" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
+                        aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+                        aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
+                        aria-label="Slide 3"></button>
+            </div>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="{% static 'img/top_1.png' %}" class="d-block w-100" alt="...">
+                </div>
+                <div class="carousel-item">
+                    <img src="{% static 'img/top_2.png' %}" class="d-block w-100" alt="...">
+                </div>
+                <div class="carousel-item">
+                    <img src="{% static 'img/top_3.png' %}" class="d-block w-100" alt="...">
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+                    data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+                    data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+        </div>
+        <div style="float: right; width: 50%; height: 300px; border: 1px solid blue;">
+            <a href="{% url 'main:week_sale' %}">ПРЕДЛОЖЕНИЕ НЕДЕЛИ</a>
+                <div id="carouselExampleIndicators_3" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
+                        aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+                        aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
+                        aria-label="Slide 3"></button>
+            </div>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="{% static 'img/sale_1.png' %}" class="d-block w-100" alt="...">
+                </div>
+                <div class="carousel-item">
+                    <img src="{% static 'img/sale_2.png' %}" class="d-block w-100" alt="...">
+                </div>
+                <div class="carousel-item">
+                    <img src="{% static 'img/sale_3.png' %}" class="d-block w-100" alt="...">
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+                    data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+                    data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+        </div>
+
+    </div>
+</div>
+
+
+<div style="float: left; width: 100%; height: 350px; border: 1px solid blue;">
+
+    <a href="{% url 'main:week_sale' %}">Полезные обзоры</a>
+    <img src="{% static 'img/post.png' %}"  alt="...">
+</div>
+{% endblock %}
+
+
+</body>
+</html>

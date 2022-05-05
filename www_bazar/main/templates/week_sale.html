@@ -1,0 +1,38 @@
+{% extends 'start.html' %}
+{% load static %}
+{% block content %}
+<h3>Sale</h3>
+
+{% for product in object_list %}
+
+<div class="card" style="width: 18rem; display:inline-block">
+    <img src=" {% if product.image %}{{ product.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}"
+         class="card-img-top" alt="...">
+    <div class="card-body">
+        <h5 class="card-title" style="color:blue">{{ product.slug|upper }}</h5>
+        <h5 class="card-title" style="color:green">{% for brand in product.brand.all %} {{brand|upper}}{% endfor %}</h5>
+        <p class="card-text" style="color:red">Новая цена:  {{ product.price|upper }} $ </p>
+        <p class="card-text" >Старая цена:  {{ product.price_old|upper }} $ </p>
+        <a href="{{ product.get_absolute_url }}" class="btn btn-primary">Описание товара</a>
+    </div>
+</div>
+
+{% endfor %}
+{% block pagination %}
+        {% if is_paginated %}
+
+        <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            {% if page_obj.has_previous %}
+                <li class="page-item"><a class="page-link" href="{{ request.path }}?page={{ page_obj.previous_page_number }}">Назад</a></li>
+            {% endif %}
+        <li class="page-item"><a class="page-link" href="#">{{ page_obj.number }}</a></li>
+
+            {% if page_obj.has_next %}
+        <li class="page-item"><a class="page-link" href="{{ request.path }}?page={{ page_obj.next_page_number }}">Вперед</a></li>
+            {% endif %}
+        </ul>
+        </nav>
+        {% endif %}
+{% endblock %}
+{% endblock %}

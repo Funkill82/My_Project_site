@@ -1,0 +1,56 @@
+{% extends 'start.html' %}
+{% load static %}
+{% block content %}
+<h3>Комплекты</h3>
+
+{% for product in object_list %}
+<div style="float: left;">
+
+<img src=" {% if product.image %}{{ product.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}"
+         style=" height: 600x; width:600px" alt="...">
+         <h3 style="color:red">Общая цена:  {{ product.price|upper }} $ </h3>
+    <br>
+            <div>
+                <form action="{% url 'korzina:korzina_tw_add' product_id=product.id %}" method="POST">
+                    {% csrf_token %}
+                    {{ korzina_product_form}}
+                    <input type="submit" value="Добавить в корзину">
+                </form>
+                <br>
+            </div>
+</div>
+{% for elem in product.products.all %}
+
+<div class="card" style="width: 18rem; display:inline-block">
+    <img src=" {% if product.image %}{{ elem.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}"
+         class="card-img-top" alt="...">
+    <div class="card-body">
+        <h5 class="card-title" style="color:blue">{{ elem.slug|upper }}</h5>
+        <h5 class="card-title" style="color:green">{% for brand in elem.brand.all %} {{brand|upper}}{% endfor %}</h5>
+        <p class="card-text" style="color:red">Цена:  {{ elem.price|upper }} $ </p>
+        <a href="{{ elem.get_absolute_url }}" class="btn btn-primary">Описание товара</a>
+
+    </div>
+</div>
+{% endfor %}
+{% endfor %}
+
+
+{% block pagination %}
+        {% if is_paginated %}
+
+        <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            {% if page_obj.has_previous %}
+                <li class="page-item"><a class="page-link" href="{{ request.path }}?page={{ page_obj.previous_page_number }}">Назад</a></li>
+            {% endif %}
+        <li class="page-item"><a class="page-link" href="#">{{ page_obj.number }}</a></li>
+
+            {% if page_obj.has_next %}
+        <li class="page-item"><a class="page-link" href="{{ request.path }}?page={{ page_obj.next_page_number }}">Вперед</a></li>
+            {% endif %}
+        </ul>
+        </nav>
+        {% endif %}
+{% endblock %}
+{% endblock %}
