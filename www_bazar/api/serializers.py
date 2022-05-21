@@ -10,6 +10,7 @@ class UnderCategoryModelSerializers(serializers.ModelSerializer):
 
 class CategoryModelSerializer(serializers.ModelSerializer):
     under_category = UnderCategoryModelSerializers()
+
     class Meta:
         model = Category
         fields = ['name', 'under_category']
@@ -26,18 +27,22 @@ class BazarModelSerializers(serializers.ModelSerializer):
         model = Bazar
         fields = ['name']
 
+
 class ProductModelSerializers(serializers.ModelSerializer):
+    """ Общий сериализатор по продуктам """
     category_name = serializers.CharField(source='category.name')
     undercategory_name = serializers.CharField(source='category.under_category.name')
     brand = BrandModelSerializers(many=True)
     bazar_name = serializers.CharField(source='bazar.name')
+
     class Meta:
         model = Product
         fields = ["id", "name", "description", "price", "price_old", "stock", "available",
                   "category_name", "undercategory_name", "bazar_name", "brand"]
 
 
-
-
-
-
+class ProductDetailModelSerializers(serializers.ModelSerializer):
+    """ CRUD Detail Product"""
+    class Meta:
+        model = Product
+        fields = ["id", "name", "description", "price", "price_old", "stock", "available"]

@@ -148,6 +148,7 @@ class Product(models.Model):
 
 
 class TwiceProduct(models.Model):
+    """Модель двойных товаров"""
     name = models.CharField(max_length=150, db_index=True)
     slug = models.SlugField(max_length=200, db_index=True, editable=False)
     products = models.ManyToManyField(Product, related_name="tw_product")
