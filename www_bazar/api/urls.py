@@ -1,6 +1,6 @@
 from django.urls import path, include
 from rest_framework import routers
-from rest_framework_simplejwt.views import TokenObtainPairView,TokenRefreshView,TokenVerifyView
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView, TokenVerifyView
 from .views import CategoryApi, UnderCategoryApi, ProductViewSet
 
 app_name = "api"
@@ -8,7 +8,6 @@ app_name = "api"
 router = routers.SimpleRouter()
 
 router.register(r'product', ProductViewSet)
-
 
 urlpatterns = [
 

@@ -78,7 +78,6 @@ class ProductDetail(DetailView):
     extra_context = {'korzina_product_form': korzina_product_form}
 
 
-
 class TwiceProductList(generic.ListView):
     """Таблица комплектов"""
     model = TwiceProduct
@@ -112,9 +111,5 @@ class SearchView(generic.ListView):
 
     def get_queryset(self):  # новый
         query = self.request.GET.get('q')
-        object_list = Product.objects.filter(
-            Q(name__icontains=query) | Q(description__icontains=query))
+        object_list = Product.objects.filter(Q(name__icontains=query) | Q(description__icontains=query))
         return object_list
-
-
-

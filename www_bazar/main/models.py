@@ -16,15 +16,17 @@ class User(AbstractUser):
 
 class UnderCategory(models.Model):
     """M-2-O Подкатегории товаров"""
-    name = models.CharField(max_length=200, db_index=True,unique=True)
+    name = models.CharField(max_length=200, db_index=True, unique=True)
     slug = models.SlugField(max_length=200, db_index=True, default='', editable=False)
+
     class Meta:
         ordering = ("slug",)
         verbose_name = "UnderCategory"
         verbose_name_plural = "UndreCategories"
+
     def save(self, *args, **kwargs):
         value = self.name
-        self.slug = slugify(value, allow_unicode=True) #поле может принимать Unicode символы кроме ASCII
+        self.slug = slugify(value, allow_unicode=True)  # поле может принимать Unicode символы кроме ASCII
         super().save(*args, **kwargs)
 
     def get_absolute_url(self):
@@ -44,13 +46,14 @@ class Category(models.Model):
         ordering = ("under_category",)
         verbose_name = "Category"
         verbose_name_plural = "Categories"
+
     def save(self, *args, **kwargs):
         value = self.name
-        self.slug = slugify(value, allow_unicode=True) #поле может принимать Unicode символы кроме ASCII
+        self.slug = slugify(value, allow_unicode=True)  # поле может принимать Unicode символы кроме ASCII
         super().save(*args, **kwargs)
 
     def get_absolute_url(self):
-        return reverse('main:product_list_by_category',kwargs={'slug': self.slug})
+        return reverse('main:product_list_by_category', kwargs={'slug': self.slug})
 
     def __str__(self):
         return f"{self.name},{self.under_category}"
@@ -58,8 +61,10 @@ class Category(models.Model):
 
 class Brand(models.Model):
     """ M-2-M Бренд товора"""
-    name = models.CharField(max_length=200, db_index=True,unique=True)
-    slug = models.SlugField(max_length=200, db_index=True,default='', editable=False) #editable не отображать в админке,пропускается валидация
+    name = models.CharField(max_length=200, db_index=True, unique=True)
+    slug = models.SlugField(max_length=200, db_index=True, default='',
+                            editable=False)  # editable не отображать в админке,пропускается валидация
+
     class Meta:
         ordering = ("slug",)
         verbose_name = "Brand"
@@ -76,16 +81,19 @@ class Brand(models.Model):
 
 class Bazar(models.Model):
     """Магазины"""
-    name = models.CharField(max_length=200, db_index=True,unique=True)
-    adress = models.CharField(max_length=200,unique=True)
-    tel =  models.CharField(max_length=12,unique=True)
+    name = models.CharField(max_length=200, db_index=True, unique=True)
+    adress = models.CharField(max_length=200, unique=True)
+    tel = models.CharField(max_length=12, unique=True)
+
     def __str__(self):
         return f"{self.name},{self.adress},{self.tel}"
 
+
 class Tag(models.Model):
     """M-2-O Тэг по категориям товаров"""
-    name = models.CharField(max_length=200, db_index=True,unique=True)
+    name = models.CharField(max_length=200, db_index=True, unique=True)
     slug = models.SlugField(max_length=200, db_index=True, default='', editable=False)
+
     def __str__(self):
         return self.slug
 
@@ -93,8 +101,10 @@ class Tag(models.Model):
         value = self.name
         self.slug = slugify(value, allow_unicode=True)
         super().save(*args, **kwargs)
+
     def __str__(self):
         return self.name
+
 
 class Article(models.Model):
     """M-2-O Подкатегории товаров"""
@@ -102,8 +112,6 @@ class Article(models.Model):
 
     def __str__(self):
         return self.name
-
-
 
 
 class Product(models.Model):
@@ -124,7 +132,7 @@ class Product(models.Model):
     video_new = EmbedVideoField(blank=True)
     price = models.DecimalField(max_digits=8, decimal_places=2)
     price_old = models.DecimalField(max_digits=8, decimal_places=2)
-    articles = models.ForeignKey(Article,related_name="articles", on_delete=models.CASCADE)
+    articles = models.ForeignKey(Article, related_name="articles", on_delete=models.CASCADE)
     status = models.CharField(max_length=1, choices=Product_Availability, default='Y')
     stock = models.PositiveIntegerField()
     available = models.BooleanField(default=True)
@@ -143,6 +151,7 @@ class Product(models.Model):
         value = self.name
         self.slug = slugify(value, allow_unicode=True)
         super().save(*args, **kwargs)
+
     def __str__(self):
         return f"{self.name},{self.category}"
 

@@ -4,13 +4,11 @@ from .views import Register, CategoryList, UnderCategoryList, ProductDetail, \
 from django.conf import settings
 from django.conf.urls.static import static
 
-
-
 app_name = "main"
 
 urlpatterns = [
     path('', include('django.contrib.auth.urls')),
-    path('register/', Register.as_view(),name='register'),
+    path('register/', Register.as_view(), name='register'),
     path('category_list/<str:slug>', CategoryList.as_view(), name='category_list'),
     path('products/<str:slug>', UnderCategoryList.as_view(), name='product_list_by_category'),
     path('product/<str:slug>', ProductDetail.as_view(), name='product_detail'),

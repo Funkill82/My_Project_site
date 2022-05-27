@@ -20,10 +20,12 @@ class UnderCategoryApi(ListAPIView):
     serializer_class = UnderCategoryModelSerializers
     permission_classes = (IsAdminUser,)
 
+
 class ProductApi(ListAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductModelSerializers
     permission_classes = (IsAuthenticatedOrReadOnly,)
+
 
 class ProductDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Product.objects.all()

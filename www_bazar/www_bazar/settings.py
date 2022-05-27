@@ -5,7 +5,6 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
@@ -16,7 +15,6 @@ SECRET_KEY = 'django-insecure-eh8+c2*72w^(4!d-o$zv2ly6t@q9ej^v9!x^1jievylj)ix2u6
 DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
-
 
 AUTH_USER_MODEL = 'main.User'
 LOGIN_URL = 'login'
@@ -76,7 +74,6 @@ MIDDLEWARE = [
     'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
-
 ROOT_URLCONF = 'www_bazar.urls'
 
 TEMPLATES = [
@@ -86,10 +83,14 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
-                'django.template.context_processors.debug',  #задает логические переменные debug и sql_queries в контексте, представляющем список запросов SQL, выполненных в запросе
-                'django.template.context_processors.request',  #задает переменную запроса в контексте
-                'django.contrib.auth.context_processors.auth',  #задает пользовательскую переменную в запросе
-                'django.contrib.messages.context_processors.messages',  # При использовании данного метода переменная messages устанавливается в контексте, содержащем все сообщения, отправленные с помощью messages framework
+                'django.template.context_processors.debug',
+                # задает логические переменные debug и sql_queries в контексте, представляющем список запросов SQL,
+                # выполненных в запросе
+                'django.template.context_processors.request',  # задает переменную запроса в контексте
+                'django.contrib.auth.context_processors.auth',  # задает пользовательскую переменную в запросе
+                'django.contrib.messages.context_processors.messages',
+                # При использовании данного метода переменная messages устанавливается в контексте, содержащем все
+                # сообщения, отправленные с помощью messages framework
                 'korzina.context_processors.korzina',
             ],
         },
@@ -97,7 +98,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'www_bazar.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
@@ -108,7 +108,6 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
@@ -128,7 +127,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
@@ -139,7 +137,6 @@ TIME_ZONE = 'Europe/Moscow'
 USE_I18N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
@@ -158,7 +155,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 # Авторизация
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
@@ -195,17 +191,14 @@ SOCIALACCOUNT_PROVIDERS = {
     }
 }
 
-
-SOCIAL_AUTH_FACEBOOK_KEY = '695868634902516'    # App ID
+SOCIAL_AUTH_FACEBOOK_KEY = '695868634902516'  # App ID
 SOCIAL_AUTH_FACEBOOK_SECRET = 'fb2ae8baf5595989ebe2de9d8acc22a1'  # App Secret
 
-
-ACCOUNT_EMAIL_REQUIRED=True
-ACCOUNT_USERNAME_REQURIED=True
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_USERNAME_REQURIED = True
 
 # Корзина
-KORZINA_SESSION_ID = 'korzina'   # ключ для хранения корзины в сессии пользователя
-
+KORZINA_SESSION_ID = 'korzina'  # ключ для хранения корзины в сессии пользователя
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),
