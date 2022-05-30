@@ -58,7 +58,8 @@ class TopProductList(generic.ListView):
     paginate_by = 4
 
     def get_queryset(self):
-        return Product.objects.filter(stock__lte=15, available=True)
+
+        return Product.objects.filter(stock__lte=15, available=True).prefetch_related('brand')
 
 
 class WeekSaleProductList(generic.ListView):
@@ -68,7 +69,7 @@ class WeekSaleProductList(generic.ListView):
     paginate_by = 4
 
     def get_queryset(self):
-        return Product.objects.filter(price_old__gt=F("price"))
+        return Product.objects.filter(price_old__gt=F("price")).prefetch_related('brand')
 
 
 class ProductDetail(DetailView):
@@ -85,6 +86,10 @@ class TwiceProductList(generic.ListView):
     korzina_product_form = KorzinaAddProductForm()
     extra_context = {'korzina_product_form': korzina_product_form}
     paginate_by = 1
+
+
+    def get_queryset(self):
+        return TwiceProduct.objects.prefetch_related('products__brand')
 
 
 def sort_filter(request):

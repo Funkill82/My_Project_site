@@ -53,14 +53,15 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.facebook',
     'embed_video',
+    'debug_toolbar',
     'main',
     'korzina',
     'orders',
     'api',
     'rest_framework',
-    'debug_toolbar',
     'django_extensions',
     'rest_framework_simplejwt',
+    'captcha',
 ]
 
 MIDDLEWARE = [
@@ -230,4 +231,15 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_REFRESH_EXP_CLAIM': 'refresh_exp',
     'SLIDING_TOKEN_LIFETIME': timedelta(minutes=5),
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
+}
+
+INTERNAL_IPS = [
+    "127.0.0.1",
+]
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+        'LOCATION': os.path.join(BASE_DIR, 'www_bazar_cache'),
+    }
 }

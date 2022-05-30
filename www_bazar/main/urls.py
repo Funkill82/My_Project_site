@@ -3,6 +3,7 @@ from .views import Register, CategoryList, UnderCategoryList, ProductDetail, \
     sort_filter, SearchView, TopProductList, WeekSaleProductList, TwiceProductList
 from django.conf import settings
 from django.conf.urls.static import static
+from django.views.decorators.cache import cache_page
 
 app_name = "main"
 
@@ -14,9 +15,9 @@ urlpatterns = [
     path('product/<str:slug>', ProductDetail.as_view(), name='product_detail'),
     path('search/>', SearchView.as_view(), name='search_results'),
     path('filter/', sort_filter, name='filter'),
-    path('top/', TopProductList.as_view(), name='top'),
-    path('week_sale/', WeekSaleProductList.as_view(), name='week_sale'),
-    path('twice_product/', TwiceProductList.as_view(), name='twice_product'),
+    path('top/', cache_page(180)(TopProductList.as_view()), name='top'),
+    path('week_sale/', cache_page(180)(WeekSaleProductList.as_view()), name='week_sale'),
+    path('twice_product/', cache_page(180)(TwiceProductList.as_view()), name='twice_product'),
 
 ]
 
